@@ -6,18 +6,18 @@
 # то треугольника с такими сторонами не существует.
 # Отдельно сообщить является ли треугольник разносторонним, равнобедренным или равносторонним.
 
-# side_a = int(input("Введите первую длину стороны предполагаемого треугольник:  "))
-# side_b = int(input("Введите вторую длину стороны предполагаемого треугольника: "))
-# side_c = int(input("Введите последнюю длину стороны предполагаемого треугольника: "))
-#
-# if side_a + side_b <= side_c or side_a + side_c <= side_b or side_b + side_c <= side_a:
-#     print(f"Треугольника с сторонами {side_a}, {side_b}, {side_c} не существует")
-# elif side_a == side_b and side_a == side_c:
-#     print("Треугольник равносторонний")
-# elif side_a == side_b or side_a == side_c or side_b == side_c:
-#     print("Треугольник равнобедренный")
-# else:
-#     print("Треугольник разносторонний")
+side_a = int(input("Введите первую длину стороны предполагаемого треугольник:  "))
+side_b = int(input("Введите вторую длину стороны предполагаемого треугольника: "))
+side_c = int(input("Введите последнюю длину стороны предполагаемого треугольника: "))
+
+if side_a + side_b <= side_c or side_a + side_c <= side_b or side_b + side_c <= side_a:
+    print(f"Треугольника с сторонами {side_a}, {side_b}, {side_c} не существует")
+elif side_a == side_b and side_a == side_c:
+    print("Треугольник равносторонний")
+elif side_a == side_b or side_a == side_c or side_b == side_c:
+    print("Треугольник равнобедренный")
+else:
+    print("Треугольник разносторонний")
 
 
 # Task2.
