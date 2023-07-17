@@ -32,7 +32,7 @@ while True:
         print("Вы ввели число вне диапазона, попробуйте снова:")
     else:
         result = True
-        if numb in range(3):
+        if numb in range(2):
             result = False
         else:
             for i in range(2, numb):
