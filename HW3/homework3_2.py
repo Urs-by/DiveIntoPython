@@ -44,13 +44,13 @@ my_str = "Прежде чем начать делиться своими мыс�
 
 FREQ_WORD = 10
 
-my_str = my_str.lower()
+
 punctuation_marks = ['.', ',', '-', '!', '?', ':', ';', '"']
+my_str = my_str.lower()
 my_list = my_str.split()
 
 # удаляем из слов знаки препинания
 for i in range(len(my_list)):
-
     if my_list[i][-1] in punctuation_marks:
         my_list[i] = my_list[i][:-1]
 
