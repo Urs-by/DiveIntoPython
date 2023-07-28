@@ -75,10 +75,12 @@ def without(friend: str, n_dict: dict) -> dict:
 new1_dict = copy.deepcopy(item_dict)
 print(f"Вещи, которые одновременно взяли все друзья: {crossing(new1_dict)}")
 
+
 print("Уникальные вещи, которые взял каждый друг:")
 for i in item_dict:
     new_dict = copy.deepcopy(item_dict)
     print(unicum(i, new_dict))
+
 
 print("Вещи, которые есть у всех друзей кроме одного и имя того, у кого данная вещь отсутствует:")
 for i in item_dict:
