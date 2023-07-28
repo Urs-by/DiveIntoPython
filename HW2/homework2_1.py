@@ -39,6 +39,7 @@ def add_cashback(cash: float) -> float:
     """
     print(f"Вам начислены проценты {round(cash * CASHBACK, 2)}")
     cash = cash + cash * CASHBACK
+    history_cash.append(cash)
     print(f"Сумма на счете {round(cash, 2)}")
     return cash
 
@@ -52,11 +53,50 @@ def verification_gold_sum(cash: float) -> float:
     if cash >= GOLD_SUM:
         print(f"С Вас высчитан налог на богатство в размере {cash * WEALTH_TAX}")
         cash = cash - cash * WEALTH_TAX
+        history_cash.append(cash)
+
+    return cash
+
+def add_sum(cash: float)-> float:
+    """
+    функция пополняет текущий счет
+    :param cash: сумма на счете
+    :return: cash обновленная сумма на счете
+    """
+    money = enter_sum()
+    cash = cash + money
+    history_cash.append(cash)
+
+    return cash
+
+def wihdrawal(cash: float)-> float:
+    """
+    функция снятия денег
+    :param cash:
+    :return:
+    """
+    money = enter_sum()
+
+    commission = money * PERCENT
+
+    if commission < MIN_SUM:
+        commission = MIN_SUM
+    elif commission > MAX_SUM:
+        commission = MAX_SUM
+    if cash < money + commission:
+        print("на Вашей карте нет столько денег, введите меньшую сумму")
+    else:
+        print(f"за снятие наличных с карты с Вас удержена коммиссия в размере {round(commission, 2)}")
+        cash = cash - money
+        history_cash.append(cash)
+        cash = cash - commission
+        history_cash.append(cash)
 
     return cash
 
 
 cash = 0
+history_cash = [0]
 transactions = 1
 
 while True:
@@ -66,38 +106,30 @@ while True:
     1 - пополнить карту;
     2 - снять наличные;
     3 - проверить баланс;
-    4 - забрать карту
+    4 - история движения средств;
+    5 - забрать карту
             """)
     option = int(input("Выберите операцию: \n"))
     if option == 1:
+
         cash = verification_gold_sum(cash)
-        money = enter_sum()
-        cash = cash + money
+        cash = add_sum(cash)
         if transactions % STEP_FOR_CASHBACK == 0:
             cash = add_cashback(cash)
         transactions += 1
     elif option == 2:
         cash = verification_gold_sum(cash)
-        money = enter_sum()
-
-        commission = money * PERCENT
-
-        if commission < MIN_SUM:
-            commission = MIN_SUM
-        elif commission > MAX_SUM:
-            commission = MAX_SUM
-        if cash < money + commission:
-            print("на Вашей карте нет столько денег, введите меньшую сумму")
-        else:
-            print(f"за снятие наличных с карты с Вас удержена коммиссия в размере {round(commission, 2)}")
-            cash = cash - money - commission
-            if transactions % STEP_FOR_CASHBACK == 0:
-                cash = add_cashback(cash)
-            transactions += 1
+        cash = wihdrawal(cash)
+        if transactions % STEP_FOR_CASHBACK == 0:
+            cash = add_cashback(cash)
+        transactions += 1
     elif option == 3:
         cash = verification_gold_sum(cash)
         print(f"На Вашем счету {round(cash, 2)}")
     elif option == 4:
+        print("Ваша история движения средств:")
+        print(* history_cash)
+    elif option == 5:
         break
     else:
         cash = verification_gold_sum(cash)
