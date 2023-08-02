@@ -9,6 +9,17 @@ def calculate_portfolio_value(stocks: dict, prices: dict) -> float:
     """
     return sum(stocks*prices for stocks, prices in zip(stocks.values(), prices.values()))
 
+
+def calculate_portfolio_return(initial_value: float, current_value: float) -> float:
+    """
+    функция возвращает процентную доходность конкретного портфеля
+    :param initial_value: начальная стоимость портфеля акций
+    :param current_value: текущая стоимость портфеля акций
+    :return: процентная доходность портфеля
+    """
+    return (current_value-initial_value)/100
+
+
 stocks = {"AAPL": 10, "GOOGL": 5, "MSFT": 8}
 prices = {"AAPL": 150.25, "GOOGL": 2500.75, "MSFT": 300.50}
 
