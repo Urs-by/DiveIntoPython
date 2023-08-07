@@ -11,10 +11,10 @@ def calculate_portfolio_value(stocks: dict, prices: dict) -> float:
     """
 
     global _first_prices
-    print(f'Первоначальная стоимость акций: {_first_prices}')
+    #print(f'Первоначальная стоимость акций: {_first_prices}')
     if _first_prices == {}:
         _first_prices = prices
-
+    # решение стандартное
     # res = 0
     # for key, value in stocks.items():
     #     res = res + (value * prices[key])
