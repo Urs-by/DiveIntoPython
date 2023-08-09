@@ -1,6 +1,6 @@
 from random import randint, choice
-from os import getcwd, mkdir, listdir
-
+from os import getcwd, mkdir, listdir, chdir
+from pathlib import Path
 
 def give_name() -> str:
     name: str = ''
@@ -24,7 +24,20 @@ def create_files(ext: str, directory: str = None, min_len: int = 6,
 
             file_output.write(str(list_of_bytes))
 
+def sort_files(directory: str | Path = 'for_test'):
+    chdir(directory)
+    print(listdir())
+    for file in Path(getcwd()).iterdir():
+        if file.is_dir():
+            continue
+        ext = file.name.split('.')[1]
+        if ext.upper() not in listdir():
+            mkdir(ext.upper())
+        file.replace(f"{ext.upper()}/{file.name}")
+
+
 
 if __name__ == '__main__':
     EXTEN = ('.txt', '.doc', '.pdf', '.bin')
     create_files(ext=choice(EXTEN), directory='for_test')
+    sort_files()

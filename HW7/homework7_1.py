@@ -9,7 +9,7 @@
 rename(wanted_name = "video", count_nums=3, extension_old=".txt", extension_new=".csv", diapazon=[3, 6])
 foto_2002.txt -> o_20video001.csv
 """
-from os import renames, getcwd, listdir, path, chdir
+from os import renames, getcwd, listdir, path, chdir, walk
 
 
 def numb_to_capacity(count_nums: int) -> int:
@@ -29,26 +29,34 @@ def group_rename(wanted_name: str = '',
                  extension_old: str = '.',
                  extension_new: str = '.',
                  diapazon: list = [3, 6]) -> None:
-    directory = getcwd() + TEST_DIRECTORY
-    chdir(directory)
-    list_files = listdir(directory)
+
+    # записываем путь к директории с файлами
+    path_directory = getcwd() + TEST_DIRECTORY
+    #
     capacity = numb_to_capacity(count_nums)
     num = 1
-    for i in list_files:
-        name_file, ext_file = path.splitext(i)
-        if ext_file == extension_old:
-            ext_file = extension_new
-            name_file = name_file[diapazon[0] - 1:diapazon[1]] + wanted_name + str(num)
+    # проходимся циклом по всем вложенным дирректориям
+    for cur_dir in walk(path_directory):
+        # изменяем деректорию для работы с файлами
+        chdir(cur_dir[0])
+        # запоминаем список файлов в директории
+        list_files = cur_dir[2]
 
-            if capacity > 1:
-                num += 1
-                capacity -= 1
-            else:
-                num = ''
-
-            renames(i, name_file + ext_file)
+        for file in list_files:
+            name_file, ext_file = path.splitext(file)
+            if ext_file == extension_old:
+                ext_file = extension_new
+                name_file = name_file[diapazon[0] - 1:diapazon[1]] + wanted_name + str(num)
+                # если количество нумерации файлов превышена , дальнейшую нумерацию прекращаем
+                if capacity > 1:
+                    num += 1
+                    capacity -= 1
+                else:
+                    num = ''
+                renames(file, name_file + ext_file)
 
 
 if __name__ == '__main__':
     TEST_DIRECTORY = '/for_test'
-    group_rename(wanted_name='audio', extension_old='.txt', extension_new='.mp3')
+    directory = getcwd() + TEST_DIRECTORY
+    group_rename(wanted_name='audio', extension_old='.doc', extension_new='.mp3')
