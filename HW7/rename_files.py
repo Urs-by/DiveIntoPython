@@ -1,3 +1,5 @@
+__all__ = ['group_rename', 'numb_to_capacity']
+
 """
 Напишите функцию группового переименования файлов. Она должна:
 - принимать параметр желаемое конечное имя файлов. При переименовании в конце имени добавляется порядковый номер.
@@ -9,7 +11,8 @@
 rename(wanted_name = "video", count_nums=3, extension_old=".txt", extension_new=".csv", diapazon=[3, 6])
 foto_2002.txt -> o_20video001.csv
 """
-from os import renames, getcwd, listdir, path, chdir, walk
+from os import renames, getcwd, path, chdir, walk
+
 
 
 def numb_to_capacity(count_nums: int) -> int:
@@ -30,13 +33,10 @@ def group_rename(wanted_name: str = '',
                  extension_new: str = '.',
                  diapazon: list = [3, 6]) -> None:
 
-    # записываем путь к директории с файлами
-    path_directory = getcwd() + TEST_DIRECTORY
-    #
     capacity = numb_to_capacity(count_nums)
     num = 1
     # проходимся циклом по всем вложенным дирректориям
-    for cur_dir in walk(path_directory):
+    for cur_dir in walk(getcwd()):
         # изменяем деректорию для работы с файлами
         chdir(cur_dir[0])
         # запоминаем список файлов в директории

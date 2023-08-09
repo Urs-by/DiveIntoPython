@@ -1,6 +1,9 @@
+__all__ = ['create_files', 'sort_files']
+
 from random import randint, choice
 from os import getcwd, mkdir, listdir, chdir
 from pathlib import Path
+
 
 def give_name() -> str:
     name: str = ''
@@ -26,7 +29,6 @@ def create_files(ext: str, directory: str = None, min_len: int = 6,
 
 def sort_files(directory: str | Path = 'for_test'):
     chdir(directory)
-    print(listdir())
     for file in Path(getcwd()).iterdir():
         if file.is_dir():
             continue
