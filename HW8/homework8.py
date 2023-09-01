@@ -74,6 +74,7 @@ def list_to_byte(filename, info_list) -> None:
 
 
 def list_to_csv(filename, info_list) -> None:
+    print(info_list)
     with open(f'{filename}.csv', 'w', newline='') as res:
         csv_write = csv.DictWriter(res, fieldnames=['name',
                                                     'parent',
@@ -87,6 +88,7 @@ if __name__ == "__main__":
     path_dir = os.getcwd()
     res_list = (get_info_dir(path_dir))
     total_list = get_info_file(path_dir, res_list)
+    print(total_list)
     os.chdir(path_dir)
     list_to_json('info_file', total_list)
     list_to_csv('info_file', total_list)
