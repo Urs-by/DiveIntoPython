@@ -5,6 +5,9 @@
 # - *умножения матриц
 
 class Matrix:
+    """
+    Класс Матрица
+    """
     def __init__(self, matrix: list):
         self.matrix = matrix
         self.len_matrix = len(matrix)

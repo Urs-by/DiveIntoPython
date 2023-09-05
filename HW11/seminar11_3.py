@@ -59,6 +59,13 @@ class Rectangle:
         return self.calc_square() > other.calc_square()
 
 
+    def __str__(self):
+        return f'Rectangle(length_cm={self.length}, width_cm={self.width})'
+
+    def __repr__(self):
+        return f'Rectangle(length_cm={self.length}, width_cm={self.width}, {self.calc_len()=}, {self.calc_square()=}'
+
+
 if __name__ == '__main__':
     r1 = Rectangle(length_cm=2,
                    width_cm=2)
@@ -75,3 +82,5 @@ if __name__ == '__main__':
     print('---')
     print(f'{r3.calc_len() = }')
     print(f'{r3.calc_square() = }')
+
+    print(repr(r3))
