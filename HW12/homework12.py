@@ -62,7 +62,7 @@ class Student:
     _note_item = ValidationNote(2, 5)
     _note_test = ValidationNote(0, 100)
 
-    def subjects(self, filename):
+    def subjects(self, filename: str):
         """
         метод для загрузки названия предметов из csv файла
         :return:
@@ -82,7 +82,7 @@ class Student:
         self.items = self.subjects(filename)
         self.diary = {item: 0 for item in self.items.keys()}
 
-    def set_note(self, name_item, note):
+    def set_note(self, name_item: str, note: int):
         '''
         Метод для записи оценки
         :param name_item: название предмета
@@ -99,7 +99,7 @@ class Student:
             self._note_item = note
             self.diary[name_item] = note
 
-    def get_avg_note_items(self, bools):
+    def get_avg_note_items(self, bools: bool):
         '''
         Метод для получения среднего балла по предметам
         :param bools: Параметр для выбора тестирования=True  или предметов=False
@@ -130,7 +130,6 @@ if __name__ == "__main__":
     print(student1)
     student1.get_avg_note_items(True)
     student1.get_avg_note_items(False)
-
 
     student2 = Student('Ольга', 'Сидорова', 22, 'ПЭ12', 'ПЭ12.csv')
     print(student2)
