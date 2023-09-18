@@ -15,7 +15,21 @@
 # нужно добавить логирование несортированых сообщения и запуск из терминала.
 
 import csv
-from os import path
+import logging
+
+FORMAT = \
+    '{levelname:<8} - {asctime}. В модуле "{name}" ' \
+    'в строке {lineno:03d} функция "{funcName}()" ' \
+    ' записала сообщение: {msg}'
+
+logging.basicConfig(format=FORMAT,
+                    style='{',
+                    filename="requests.log",
+                    filemode='a',
+                    encoding='utf-8',
+                    level=logging.ERROR)
+
+logger = logging.getLogger(__name__)
 
 Security = ['безопасност', 'парол']
 Refunds = ['возврат', 'верн', 'отказ', 'отмен', 'отключить', 'отписаться']
@@ -49,6 +63,7 @@ def read_file(name_file: str) -> list:
             csv_file = [i for i in file]
             return csv_file
     except FileNotFoundError as error:
+        logger.error(f"Файла с именем {name_file} не существует! Ошибка: {error}")
         print(f"Файла с именем {name_file} не существует! Ошибка: {error}")
 
 
@@ -64,6 +79,7 @@ def write_file(name_file: str, *args):
             file_writer = csv.writer(f, delimiter=",", lineterminator="\r")
             file_writer.writerow(*args)
     except PermissionError as error:
+        logger.error(f" Отказано в доступе ! Ошибка: {error}")
         print(f" Отказано в доступе ! Ошибка: {error}")
 
 
@@ -77,6 +93,7 @@ def clear_file(name_file: str):
         f = open(name_file, 'w')
         f.close()
     except PermissionError as error:
+        logger.error(f" Отказано в доступе ! Ошибка: {error}")
         print(f" Отказано в доступе ! Ошибка: {error}")
 
 
@@ -112,8 +129,8 @@ def search_word(word: str, list_name: list) -> bool:
             if i in word:
                 return True
         return False
-    except IndexError as error:
-        print(error)
+    except IndexError or TypeError as error:
+        logger.error(f"Неожиданная ошибка! Ошибка: {error}")
 
 
 def unprocessed_requests(list_request: list) -> None:
@@ -122,11 +139,14 @@ def unprocessed_requests(list_request: list) -> None:
     :param list_request: список обработанных запросов
     :return: список необработанных запросов
     '''
-    join_list_request = [' '.join(i) for i in list_request]
-    # full_list = map(str, csv_file)
-    for i in csv_file:
-        if i[0] not in join_list_request:
-            print(i[0])
+    try:
+        join_list_request = [' '.join(i) for i in list_request]
+        # full_list = map(str, csv_file)
+        for i in csv_file:
+            if i[0] not in join_list_request:
+                print(i[0])
+    except TypeError as error:
+        logger.error(f"Неожиданная ошибка, вероятно из-за отсутствия исходного файла: {error}")
 
 
 def create_list_requests(name_list: list) -> list:
@@ -145,8 +165,9 @@ def create_list_requests(name_list: list) -> list:
                     # print(request)
                     break
         return list_request
-    except IndexError as error:
-        print(error)
+    except TypeError as error:
+        logger.error(f"Неожиданная ошибка, вероятно из-за отсутствия исходного файла: {error}")
+        # print(error)
 
 
 def save_category_to_file() -> list:
@@ -154,16 +175,18 @@ def save_category_to_file() -> list:
     функция записи в новый сым файл отсортированных данных
     :return: отcортированный список обращений по категориям
     '''
-
-    new_list_request = []
-    for key, value in list_requests.items():
-        i_list = create_list_requests(value)
-        for j in i_list:
-            if j not in new_list_request:
-                new_list_request.append(j)
-                str_j = ' '.join(j)
-                write_file(name_out_file, [key, str_j])
-    return new_list_request
+    try:
+        new_list_request = []
+        for key, value in list_requests.items():
+            i_list = create_list_requests(value)
+            for j in i_list:
+                if j not in new_list_request:
+                    new_list_request.append(j)
+                    str_j = ' '.join(j)
+                    write_file(name_out_file, [key, str_j])
+        return new_list_request
+    except TypeError as error:
+        logger.error(f"Неожиданная ошибка, вероятно из-за отсутствия исходного файла: {error}")
 
 
 # вывод частотного словар
@@ -173,8 +196,8 @@ def save_category_to_file() -> list:
 
 if __name__ == '__main__':
     csv_file = read_file(name_in_file)
-    #print(len(csv_file))
+    # print(len(csv_file))
     clear_file(name_out_file)
     new_list_request = save_category_to_file()
     unprocessed_requests(new_list_request)
-    #print(len(new_list_request))
+    # print(len(new_list_request))
