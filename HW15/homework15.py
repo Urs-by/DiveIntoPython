@@ -16,6 +16,7 @@
 
 import csv
 import logging
+import argparse
 
 FORMAT = \
     '{levelname:<8} - {asctime}. В модуле "{name}" ' \
@@ -47,7 +48,7 @@ list_requests = {'Security': Security, 'Refunds': Refunds, 'Troubleshooting': Tr
                  'Advertising': Advertising, 'Collaboration': Collaboration, 'Limits': Limits, 'Payments': Payments,
                  'Features': Features}
 
-name_in_file = 'user_support_letters.csv'
+# name_in_file = 'user_support_letters.csv'
 name_out_file = 'user_sorted_letters.csv'
 
 
@@ -170,7 +171,7 @@ def create_list_requests(name_list: list) -> list:
         # print(error)
 
 
-def save_category_to_file() -> list:
+def save_category_to_file(name_out_file: str) -> list:
     '''
     функция записи в новый сым файл отсортированных данных
     :return: отcортированный список обращений по категориям
@@ -189,15 +190,33 @@ def save_category_to_file() -> list:
         logger.error(f"Неожиданная ошибка, вероятно из-за отсутствия исходного файла: {error}")
 
 
+def pars() -> argparse:
+    '''
+    функция парсинга аргументов
+    :return: аргументы
+    '''
+    parser = argparse.ArgumentParser(description='Сортирует обращения пользователей по категориям')
+    parser.add_argument('name_input_file', metavar='входной файл', type=str, nargs=1,
+                        help=' введите имя исходного файла')
+    parser.add_argument('name_output_file', metavar='входной файл', type=str, nargs=1,
+                        help=' введите имя отcортированного файла')
+
+    args = parser.parse_args()
+    return args
+
+
 # вывод частотного словар
 # words = all_words(csv_file)
 # for key, value in sorted(words.items()):
 #     print(key, value)
 
 if __name__ == '__main__':
-    csv_file = read_file(name_in_file)
-    # print(len(csv_file))
-    clear_file(name_out_file)
-    new_list_request = save_category_to_file()
-    unprocessed_requests(new_list_request)
-    # print(len(new_list_request))
+    args = pars()
+    print(type(args))
+    csv_file = read_file(args.name_input_file[0])
+    # очистка данных из сортированного файла
+    clear_file(args.name_output_file[0])
+    save_category_to_file(args.name_output_file[0])
+
+    # отладка для поиска необработанных сообщений
+    # unprocessed_requests(new_list_request)
