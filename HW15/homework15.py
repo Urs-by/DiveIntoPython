@@ -32,24 +32,32 @@ logging.basicConfig(format=FORMAT,
 
 logger = logging.getLogger(__name__)
 
-Security = ['безопасност', 'парол']
-Refunds = ['возврат', 'верн', 'отказ', 'отмен', 'отключить', 'отписаться']
-Troubleshooting = ['проблем', 'восстанов', 'глючит', 'сбой', 'разобрать', 'улучшит', 'исправ', 'ничего',
-                   'почин', 'ошиб', 'подсказать', 'медленно', 'когда', 'программа', 'вопрос', 'нужно']
-Account = ['аккаунт', 'авториз', 'учетн']
-Advertising = ['реклам', 'размещен']
-Collaboration = ['сотруднич', 'партнерство']
-Limits = ['ограничен', 'лимит', 'макс', 'увелич']
-Payments = ['рассрочк', 'платеж', 'оплат', 'списани', 'деньги', 'ethereum', 'mastercard',
-            'pay', 'visa', 'webmoney', 'yandex.money']
-Features = ['функц', 'сервис', 'подписка', 'api']
+SECURITY = ['безопасност', 'парол']
+REFUNDS = ['возврат', 'верн', 'отказ', 'отмен', 'отключить', 'отписаться']
+TROUBLESHOOTING = ['проблем', 'восстанов', 'глючит', 'сбой', 'разобрать',
+                   'улучшит', 'исправ', 'ничего', 'почин', 'ошиб',
+                   'подсказать', 'медленно', 'когда', 'программа',
+                   'вопрос', 'нужно']
+ACCOUNT = ['аккаунт', 'авториз', 'учетн']
+ADVERTISING = ['реклам', 'размещен']
+COLLABORATION = ['сотруднич', 'партнерство']
+LIMITS = ['ограничен', 'лимит', 'макс', 'увелич']
+PAYMENTS = ['рассрочк', 'платеж', 'оплат', 'списани', 'деньги', 'ethereum',
+            'mastercard', 'pay', 'visa', 'webmoney', 'yandex.money']
+FEATURES = ['функц', 'сервис', 'подписка', 'api']
 
-list_requests = {'Security': Security, 'Refunds': Refunds, 'Troubleshooting': Troubleshooting, 'Account': Account,
-                 'Advertising': Advertising, 'Collaboration': Collaboration, 'Limits': Limits, 'Payments': Payments,
-                 'Features': Features}
+list_requests = {'Security': SECURITY,
+                 'Refunds': REFUNDS,
+                 'Troubleshooting': TROUBLESHOOTING,
+                 'Account': ACCOUNT,
+                 'Advertising': ADVERTISING,
+                 'Collaboration': COLLABORATION,
+                 'Limits': LIMITS,
+                 'Payments': PAYMENTS,
+                 'Features': FEATURES}
 
 # name_in_file = 'user_support_letters.csv'
-name_out_file = 'user_sorted_letters.csv'
+#name_out_file = 'user_sorted_letters.csv'
 
 
 def read_file(name_file: str) -> list:
